@@ -6,6 +6,6 @@
 *   Hugo Theme Stack
 *
 *   @author: Jimmy Cai
-*   @website: https://jimmycai.com
-*   @link: https://github.com/CaiJimmy/hugo-theme-stack
+*   @website: https://jimmycai.io
+*   @link: https://github.io/CaiJimmy/hugo-theme-stack
 */
