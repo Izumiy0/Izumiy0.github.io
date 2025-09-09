@@ -604,7 +604,7 @@
 <style>
   @font-face {
     font-family: 'patrickHand';
-    src: url(https://Izumiy0.github.com/font/linja_waso_100font/linja-waso.ttf) format('truetype');
+    src: url(/font/linja_waso_100font/linja-waso.ttf) format('truetype');
   }
 
   :root {
@@ -723,12 +723,13 @@
 
     
     
-    
+    const live2d_path = 'https://fastly.jsdelivr.net/npm/live2d-widgets@1.0.0-rc.6/dist/';
     
     const cssPath = "/waifu/waifu.css"
     const waifuTipsJsonPath = "/waifu/waifu-tips.json" 
     const live2dJsPath = "/waifu/live2d.min.js"
-    const waifuTipsJsPath = "/waifu/waifu-tips.js"
+
+    const waifuTipsJsPath = "/waifu/waifu-tips.min.js"
     const live2dcubismcoreminjsPath = "/waifu/live2dcubismcore.min.js"
     
     
@@ -772,14 +773,15 @@
         
         await Promise.all([
             loadExternalResource(cssPath, 'css'),
-            loadExternalResource(waifuTipsJsPath, 'js'),
+            loadExternalResource(live2d_path + 'waifu-tips.min.js', 'js'),
+            
             loadExternalResource(live2dJsPath, "js")
         ]);
         
         
         initWidget({
             waifuPath: waifuTipsJsonPath,
-            
+            cdnPath: 'https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/',
             cubism2Path: live2dJsPath,
             cubism5Path: live2dcubismcoreminjsPath,
             tools: ['hitokoto', 'asteroids', 'switch-model', 'switch-texture', 'photo', 'info', 'quit'],
