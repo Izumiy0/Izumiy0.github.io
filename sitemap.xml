@@ -2,19 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-<<<<<<< HEAD
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2025-09-08T20:34:03+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/post/</loc>
-    <lastmod>2025-09-08T20:34:03+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/p/rt-01/</loc>
-    <lastmod>2025-09-08T20:34:03+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2020-09-09T00:00:00+00:00</lastmod>
-=======
     <loc>https://Izumiy0.github.com/</loc>
     <lastmod>2025-09-08T20:34:03+08:00</lastmod>
   </url><url>
@@ -23,20 +10,13 @@
   </url><url>
     <loc>https://Izumiy0.github.com/p/rt-01/</loc>
     <lastmod>2025-09-08T20:34:03+08:00</lastmod>
->>>>>>> 7e44645b1e76a5df08d7bc6bb5a0f7c8fd4b3b43
   </url><url>
-    <loc>http://localhost:1313/p/test-chinese/</loc>
+    <loc>https://Izumiy0.github.com/categories/</loc>
     <lastmod>2020-09-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/test/</loc>
+    <loc>https://Izumiy0.github.com/p/test-chinese/</loc>
     <lastmod>2020-09-09T00:00:00+00:00</lastmod>
   </url><url>
-<<<<<<< HEAD
-    <loc>http://localhost:1313/categories/%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2020-09-09T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/page/</loc>
-=======
     <loc>https://Izumiy0.github.com/categories/test/</loc>
     <lastmod>2020-09-09T00:00:00+00:00</lastmod>
   </url><url>
@@ -44,61 +24,60 @@
     <lastmod>2020-09-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://Izumiy0.github.com/page/</loc>
->>>>>>> 7e44645b1e76a5df08d7bc6bb5a0f7c8fd4b3b43
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/archives/</loc>
+    <loc>https://Izumiy0.github.com/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/css/</loc>
+    <loc>https://Izumiy0.github.com/tags/css/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/html/</loc>
+    <loc>https://Izumiy0.github.com/tags/html/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/markdown/</loc>
+    <loc>https://Izumiy0.github.com/tags/markdown/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/markdown-syntax-guide/</loc>
+    <loc>https://Izumiy0.github.com/p/markdown-syntax-guide/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/syntax/</loc>
+    <loc>https://Izumiy0.github.com/categories/syntax/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://Izumiy0.github.com/tags/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/themes/</loc>
+    <loc>https://Izumiy0.github.com/categories/themes/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/themes/</loc>
+    <loc>https://Izumiy0.github.com/tags/themes/</loc>
     <lastmod>2019-03-11T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/placeholder-text/</loc>
+    <loc>https://Izumiy0.github.com/p/placeholder-text/</loc>
     <lastmod>2019-03-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/tag-with-whitespaces/</loc>
+    <loc>https://Izumiy0.github.com/tags/tag-with-whitespaces/</loc>
     <lastmod>2019-03-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/test-with-whitespaces/</loc>
+    <loc>https://Izumiy0.github.com/categories/test-with-whitespaces/</loc>
     <lastmod>2019-03-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/text/</loc>
+    <loc>https://Izumiy0.github.com/tags/text/</loc>
     <lastmod>2019-03-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/math-typesetting/</loc>
+    <loc>https://Izumiy0.github.com/p/math-typesetting/</loc>
     <lastmod>2019-03-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/emoji/</loc>
+    <loc>https://Izumiy0.github.com/tags/emoji/</loc>
     <lastmod>2019-03-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/emoji-support/</loc>
+    <loc>https://Izumiy0.github.com/p/emoji-support/</loc>
     <lastmod>2019-03-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/%E5%85%B3%E4%BA%8E-about/</loc>
+    <loc>https://Izumiy0.github.com/%E5%85%B3%E4%BA%8E-about/</loc>
   </url><url>
-    <loc>http://localhost:1313/search/</loc>
+    <loc>https://Izumiy0.github.com/search/</loc>
   </url><url>
-    <loc>http://localhost:1313/%E5%8F%8B%E9%93%BE-links/</loc>
+    <loc>https://Izumiy0.github.com/%E5%8F%8B%E9%93%BE-links/</loc>
   </url>
 </urlset>
