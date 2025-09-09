@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://Izumiy0.github.com/p/placeholder-text/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Placeholder Text">
+<link rel="stylesheet" href="/scss/style.min.b41fbeb1758861b170a462ca5c5b93b973caa976a8f1c39fb877a49158ef60fb.css"><meta property='og:title' content="Placeholder Text">
 <meta property='og:description' content="Lorem Ipsum Dolor Si Amet">
 <meta property='og:url' content='https://Izumiy0.github.com/p/placeholder-text/'>
 <meta property='og:site_name' content='Izumi Konata'>
@@ -16,99 +16,6 @@
     <meta name="twitter:image" content='https://Izumiy0.github.com/p/placeholder-text/matt-le-SJSpo9hQf7s-unsplash.jpg' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-<div id="particles-js"></div>
-
-<script src=/background/particles.min.js></script>
-<script>
-  particlesJS.load('particles-js', "/background/particlesjs-config.json", function() {
-    console.log('particles.js loaded - callback');
-  });
-</script>
-
-<style>
-  #particles-js {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: -1;
-  }
-</style>
-
-
-<script>
-    
-
-
-    
-    
-    const live2d_path = 'https://fastly.jsdelivr.net/npm/live2d-widgets@1.0.0-rc.6/dist/';
-    
-    const cssPath = "/waifu/waifu.css"
-    const waifuTipsJsonPath = "/waifu/waifu-tips.json" 
-    
-    
-    function loadExternalResource(url, type) {
-        return new Promise((resolve, reject) => {
-            let tag;
-
-            if (type === 'css') {
-                tag = document.createElement('link');
-                tag.rel = 'stylesheet';
-                tag.href = url;
-            }
-            else if (type === 'js') {
-                tag = document.createElement('script');
-                tag.type = 'module';
-                tag.src = url;
-            }
-            if (tag) {
-                tag.onload = () => resolve(url);
-                tag.onerror = () => reject(url);
-                document.head.appendChild(tag);
-            }
-        });
-    }
-
-    (async () => {
-        
-        
-        
-
-        
-        
-        const OriginalImage = window.Image;
-        window.Image = function (...args) {
-            const img = new OriginalImage(...args);
-            img.crossOrigin = "anonymous";
-            return img;
-        };
-        window.Image.prototype = OriginalImage.prototype;
-        
-        
-        await Promise.all([
-            loadExternalResource(cssPath, 'css'),
-            loadExternalResource(live2d_path + 'waifu-tips.js', 'js')
-        ]);
-        
-        
-        initWidget({
-            waifuPath: waifuTipsJsonPath,
-            
-            cubism2Path: live2d_path + 'live2d.min.js',
-            cubism5Path: 'https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js',
-            tools: ['hitokoto', 'asteroids', 'switch-model', 'switch-texture', 'photo', 'info', 'quit'],
-            logLevel: 'warn',
-            drag: false,
-        });
-    })();
-
-    console.log(`\n%cLive2D%cWidget%c\n`, 'padding: 8px; background: #cd3e45; font-weight: bold; font-size: large; color: white;', 'padding: 8px; background: #ff5450; font-size: large; color: #eee;', '');
-
-    
-
-</script>
     </head>
     <body class="
     article-page
@@ -166,7 +73,7 @@
         
         <div class="site-meta">
             <h1 class="site-name"><a href="/">Izumi Konata</a></h1>
-            <h2 class="site-description">欢迎来到我的网站</h2>
+            <h2 class="site-description">欢迎阅读我的博客,此博客由【Hugo &#43; Stack】来进行搭建,主要分享个人生活和学习笔记</h2>
         </div>
     </header><ol class="menu-social">
             
@@ -639,7 +546,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.99ce1801c4bad426a42fc436add4721e149159dbb598636e9578fd59cf778c83.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
@@ -652,5 +559,342 @@
     }());
 </script>
 
+<script src=/js/pjax.min.js></script>
+<script src=/js/topbar.min.js></script>
+<script>
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    pjax = new Pjax({
+      
+      selectors: [
+            ".main-container"
+        ]
+    })
+    
+    
+    topbar.config({
+        barColors: {
+            '0': 'rgba(255,  255, 255, 1)', 
+            '1.0': 'rgba(0, 149, 234,  1)' 
+        }
+    })
+    
+    
+    document.addEventListener('pjax:send', function() {
+      
+      topbar.show();
+      
+    });
+    
+    document.addEventListener('pjax:complete', function() {
+      
+      topbar.hide();
+      
+    });
+    
+    document.addEventListener('pjax:error', function(e) {
+      console.error('Pjax错误:', e);
+    });
+    pjax._handleResponse = pjax.handleResponse;
+    pjax.handleResponse = function(responseText, request, href, options) {
+        if (request.responseText.match("<html")) {
+            if (responseText) {
+                
+                let newDom = new DOMParser().parseFromString(responseText, 'text/html');
+                
+                let bodyClass = newDom.body.className;
+                document.body.setAttribute("class", bodyClass)
+            }
+            
+            pjax._handleResponse(responseText, request, href, options);
+        } else {
+            
+        }
+    }
+    
+    document.addEventListener('pjax:complete', () => {
+        
+        window.Stack.init();
+    })
+  });
+</script>
+
+
+
+<style>
+    .highlight {
+         
+        max-height: 400px;
+        overflow: hidden;
+    }
+
+    .code-show {
+        max-height: none !important;
+    }
+
+    .code-more-box {
+        width: 100%;
+        padding-top: 78px;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .code-more-btn {
+        display: block;
+        margin: auto;
+        width: 44px;
+        height: 22px;
+        background: #f0f0f5;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        padding-top: 6px;
+        cursor: pointer;
+    }
+
+    .code-more-img {
+        cursor: pointer !important;
+        display: block;
+        margin: auto;
+        width: 22px;
+        height: 16px;
+    }
+</style>
+
+<script>
+  function initCodeMoreBox() {
+    let codeBlocks = document.querySelectorAll(".highlight");
+    if (!codeBlocks) {
+      return;
+    }
+    codeBlocks.forEach(codeBlock => {
+      
+      if (codeBlock.scrollHeight <= codeBlock.clientHeight) {
+        return;
+      }
+      
+      
+      let codeMoreBox = document.createElement('div');
+      codeMoreBox.classList.add('code-more-box');
+      
+      let codeMoreBtn = document.createElement('span');
+      codeMoreBtn.classList.add('code-more-btn');
+      codeMoreBtn.addEventListener('click', () => {
+        codeBlock.classList.add('code-show');
+        codeMoreBox.style.display = 'none';
+        
+        window.dispatchEvent(new Event('resize'))
+      })
+      
+      let img = document.createElement('img');
+      img.classList.add('code-more-img');
+      img.src = "https://Izumiy0.github.com/icons/codeMore.png"
+      
+      codeMoreBtn.appendChild(img);
+      codeMoreBox.appendChild(codeMoreBtn);
+      codeBlock.appendChild(codeMoreBox)
+    })
+  }
+  
+  initCodeMoreBox();
+</script>
+
+
+
+<style>
+  @font-face {
+    font-family: 'patrickHand';
+    src: url(https://Izumiy0.github.com/font/linja_waso_100font/linja-waso.ttf) format('truetype');
+  }
+
+  :root {
+    --base-font-family: 'patrickHand';
+    --code-font-family: 'patrickHand';
+  }
+</style>
+
+
+<style>
+    #TableOfContents > ul, ol {
+        ul, ol {
+            display: none;
+        }
+        .open {
+            display: block;
+        }
+    }
+</style>
+<script>
+    function initTocHide() {
+        
+        let toc = document.querySelector(".widget--toc");
+        if (!toc) {
+            return;
+        }
+        
+        window.addEventListener('scroll', function() {
+            
+            let openUl = document.querySelectorAll(".open");
+            if (openUl.length > 0) {
+              openUl.forEach((ul) => {
+                ul.classList.remove("open")
+              })
+            }
+            
+            let currentLi = document.querySelector(".active-class");
+            if (!currentLi) {
+                return
+            }
+            
+            if (currentLi.children.length > 1) {
+                currentLi.children[1].classList.add("open")
+            }
+            
+            let ul = currentLi.parentElement;
+            do {
+                ul.classList.add("open");
+                ul = ul.parentElement.parentElement
+            } while (ul !== undefined && (ul.localName === 'ul' || ul.localName === 'ol'))
+        });
+    }
+    initTocHide()
+</script>
+
+
+
+<div id="particles-js"></div>
+<script src=/background/particles.min.js></script>
+<script>
+  particlesJS.load('particles-js', "/background/particlesjs-config.json", function() {
+    console.log('particles.js loaded - callback');
+  });
+</script>
+<style>
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+  }
+</style>
+
+
+<script>
+    async function renderKaTeX() {
+        
+        let katex = document.querySelector(".math-katex");
+        if (!katex) {
+            return;
+        }
+        
+        while (typeof renderMathInElement !== 'function') {
+            await delay(500);
+        }        
+        
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });
+    }
+    
+    
+
+    function delay(time) {
+        return new Promise(resolve => {
+            setTimeout(resolve, time)
+        })
+    }
+
+    document.addEventListener('pjax:complete', () => {
+        renderKaTeX();
+    })
+</script>
+
+
+<script>
+    
+
+
+    
+    
+    
+    
+    const cssPath = "/waifu/waifu.css"
+    const waifuTipsJsonPath = "/waifu/waifu-tips.json" 
+    const live2dJsPath = "/waifu/live2d.min.js"
+    const waifuTipsJsPath = "/waifu/waifu-tips.js"
+    const live2dcubismcoreminjsPath = "/waifu/live2dcubismcore.min.js"
+    
+    
+    function loadExternalResource(url, type) {
+        return new Promise((resolve, reject) => {
+            let tag;
+
+            if (type === 'css') {
+                tag = document.createElement('link');
+                tag.rel = 'stylesheet';
+                tag.href = url;
+            }
+            else if (type === 'js') {
+                tag = document.createElement('script');
+                tag.type = 'module';
+                tag.src = url;
+            }
+            if (tag) {
+                tag.onload = () => resolve(url);
+                tag.onerror = () => reject(url);
+                document.head.appendChild(tag);
+            }
+        });
+    }
+
+    (async () => {
+        
+        
+        
+
+        
+        
+        const OriginalImage = window.Image;
+        window.Image = function (...args) {
+            const img = new OriginalImage(...args);
+            img.crossOrigin = "anonymous";
+            return img;
+        };
+        window.Image.prototype = OriginalImage.prototype;
+        
+        
+        await Promise.all([
+            loadExternalResource(cssPath, 'css'),
+            loadExternalResource(waifuTipsJsPath, 'js'),
+            loadExternalResource(live2dJsPath, "js")
+        ]);
+        
+        
+        initWidget({
+            waifuPath: waifuTipsJsonPath,
+            
+            cubism2Path: live2dJsPath,
+            cubism5Path: live2dcubismcoreminjsPath,
+            tools: ['hitokoto', 'asteroids', 'switch-model', 'switch-texture', 'photo', 'info', 'quit'],
+            logLevel: 'warn',
+            drag: false,
+        });
+    })();
+
+    console.log(`\n%cLive2D%cWidget%c\n`, 'padding: 8px; background: #cd3e45; font-weight: bold; font-size: large; color: white;', 'padding: 8px; background: #ff5450; font-size: large; color: #eee;', '');
+
+    
+
+</script>
     </body>
 </html>
