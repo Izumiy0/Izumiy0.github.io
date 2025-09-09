@@ -7,12 +7,21 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>Izumiy0</copyright>
+<<<<<<< HEAD
         <lastBuildDate>Mon, 08 Sep 2025 20:34:03 +0800</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>RT 01</title>
         <link>http://localhost:1313/p/rt-01/</link>
         <pubDate>Mon, 08 Sep 2025 20:34:03 +0800</pubDate>
         
         <guid>http://localhost:1313/p/rt-01/</guid>
+=======
+        <lastBuildDate>Mon, 08 Sep 2025 20:34:03 +0800</lastBuildDate><atom:link href="https://Izumiy0.github.com/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>RT 01</title>
+        <link>https://Izumiy0.github.com/p/rt-01/</link>
+        <pubDate>Mon, 08 Sep 2025 20:34:03 +0800</pubDate>
+        
+        <guid>https://Izumiy0.github.com/p/rt-01/</guid>
+>>>>>>> 7e44645b1e76a5df08d7bc6bb5a0f7c8fd4b3b43
         <description></description>
         </item>
         <item>

@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+<<<<<<< HEAD
     <loc>http://localhost:1313/</loc>
     <lastmod>2025-09-08T20:34:03+08:00</lastmod>
   </url><url>
@@ -13,6 +14,16 @@
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
     <lastmod>2020-09-09T00:00:00+00:00</lastmod>
+=======
+    <loc>https://Izumiy0.github.com/</loc>
+    <lastmod>2025-09-08T20:34:03+08:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.com/post/</loc>
+    <lastmod>2025-09-08T20:34:03+08:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.com/p/rt-01/</loc>
+    <lastmod>2025-09-08T20:34:03+08:00</lastmod>
+>>>>>>> 7e44645b1e76a5df08d7bc6bb5a0f7c8fd4b3b43
   </url><url>
     <loc>http://localhost:1313/p/test-chinese/</loc>
     <lastmod>2020-09-09T00:00:00+00:00</lastmod>
@@ -20,10 +31,20 @@
     <loc>http://localhost:1313/categories/test/</loc>
     <lastmod>2020-09-09T00:00:00+00:00</lastmod>
   </url><url>
+<<<<<<< HEAD
     <loc>http://localhost:1313/categories/%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2020-09-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/page/</loc>
+=======
+    <loc>https://Izumiy0.github.com/categories/test/</loc>
+    <lastmod>2020-09-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.com/categories/%E6%B5%8B%E8%AF%95/</loc>
+    <lastmod>2020-09-09T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.com/page/</loc>
+>>>>>>> 7e44645b1e76a5df08d7bc6bb5a0f7c8fd4b3b43
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/archives/</loc>
