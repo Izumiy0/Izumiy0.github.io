@@ -820,9 +820,13 @@
 </script>
 
 
+
 <script>
     
 
+
+    
+    window.waifuInitialized = false;
 
     
     
@@ -831,8 +835,6 @@
     const cssPath = "/waifu/waifu.css"
     const waifuTipsJsonPath = "/waifu/waifu-tips.json" 
     const live2dJsPath = "/waifu/live2d.min.js"
-
-    
     
     
     
@@ -858,45 +860,61 @@
         });
     }
 
-    (async () => {
-        
-        
-        
+    
+    function initWaifu() {
+        if (window.waifuInitialized) {
+            console.log('看板娘已初始化，跳过重复初始化');
+            return;
+        }
 
-        
-        
-        const OriginalImage = window.Image;
-        window.Image = function (...args) {
-            const img = new OriginalImage(...args);
-            img.crossOrigin = "anonymous";
-            return img;
-        };
-        window.Image.prototype = OriginalImage.prototype;
-        
-        
-        await Promise.all([
-            loadExternalResource(cssPath, 'css'),
-            loadExternalResource(live2d_path + 'waifu-tips.min.js', 'js'),
+        (async () => {
             
-            loadExternalResource(live2dJsPath, "js")
-        ]);
-        
-        
-        initWidget({
-            waifuPath: waifuTipsJsonPath,
-            cdnPath: 'https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/',
-            cubism2Path: live2dJsPath,
-            cubism5Path: "https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js",
-            tools: ['hitokoto', 'asteroids', 'switch-model', 'switch-texture', 'photo', 'info', 'quit'],
-            logLevel: 'warn',
-            drag: false,
-        });
-    })();
+            
+            
 
-    console.log(`\n%cLive2D%cWidget%c\n`, 'padding: 8px; background: #cd3e45; font-weight: bold; font-size: large; color: white;', 'padding: 8px; background: #ff5450; font-size: large; color: #eee;', '');
+            
+            
+            const OriginalImage = window.Image;
+            window.Image = function (...args) {
+                const img = new OriginalImage(...args);
+                img.crossOrigin = "anonymous";
+                return img;
+            };
+            window.Image.prototype = OriginalImage.prototype;
+            
+            
+            
+            await Promise.all([
+                loadExternalResource(cssPath, 'css'),
+                loadExternalResource(live2d_path + 'waifu-tips.js', 'js'),
+                loadExternalResource(live2dJsPath, "js")
+            ]);
+            
+            
+            
+            initWidget({
+                waifuPath: waifuTipsJsonPath,
+                
+                cubism2Path: live2dJsPath,
+                cubism5Path: 'https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js',
+                tools: ['hitokoto', 'asteroids', 'switch-model', 'switch-texture', 'photo', 'info', 'quit'],
+                logLevel: 'warn',
+                drag: false,
+            });
+            
+            window.waifuInitialized = true;
+            console.log('看板娘初始化完成');
+        })();
+    }
 
     
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initWaifu);
+    } else {
+        initWaifu();
+    }
 
+    
 </script>
     </body>
 </html>
