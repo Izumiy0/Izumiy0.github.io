@@ -7,7 +7,47 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>Izumiy0</copyright>
-        <lastBuildDate>Wed, 09 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://Izumiy0.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 10 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://Izumiy0.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hadoop</title>
+        <link>https://Izumiy0.github.io/categories/hadoop/</link>
+        <pubDate>Wed, 10 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/hadoop/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>ATT&amp;CK</title>
+        <link>https://Izumiy0.github.io/categories/attck/</link>
+        <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/attck/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Red Team</title>
+        <link>https://Izumiy0.github.io/categories/red-team/</link>
+        <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/red-team/</guid>
+        <description>&lt;img src="https://Izumiy0.github.io/categories/red-team/RT.jpg" alt="Featured image of post Red Team" /&gt;</description>
+        </item>
+        <item>
+        <title>Vulnstack</title>
+        <link>https://Izumiy0.github.io/categories/vulnstack/</link>
+        <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/vulnstack/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Windows</title>
+        <link>https://Izumiy0.github.io/categories/windows/</link>
+        <pubDate>Mon, 02 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/windows/</guid>
+        <description>&lt;img src="https://Izumiy0.github.io/categories/windows/windows.jpg" alt="Featured image of post Windows" /&gt;</description>
+        </item>
+        <item>
         <title>Test</title>
         <link>https://Izumiy0.github.io/categories/test/</link>
         <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>

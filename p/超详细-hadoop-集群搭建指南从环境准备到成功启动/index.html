@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="hadoop">
+<title>超详细 Hadoop 集群搭建指南：从环境准备到成功启动</title>
+
+<link rel='canonical' href='https://Izumiy0.github.io/p/%E8%B6%85%E8%AF%A6%E7%BB%86-hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%E4%BB%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%88%B0%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8/'>
+
+<link rel="stylesheet" href="/scss/style.min.b41fbeb1758861b170a462ca5c5b93b973caa976a8f1c39fb877a49158ef60fb.css"><meta property='og:title' content="超详细 Hadoop 集群搭建指南：从环境准备到成功启动">
+<meta property='og:description' content="hadoop">
+<meta property='og:url' content='https://Izumiy0.github.io/p/%E8%B6%85%E8%AF%A6%E7%BB%86-hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%E4%BB%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%88%B0%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8/'>
+<meta property='og:site_name' content='Izumi Konata'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='hadoop' /><meta property='article:tag' content='hdfs' /><meta property='article:tag' content='yarn' /><meta property='article:published_time' content='2025-09-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-09-10T00:00:00&#43;00:00'/><meta property='og:image' content='https://Izumiy0.github.io/p/%E8%B6%85%E8%AF%A6%E7%BB%86-hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%E4%BB%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%88%B0%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8/IIustraclones-Moebius.jpg' />
+<meta name="twitter:title" content="超详细 Hadoop 集群搭建指南：从环境准备到成功启动">
+<meta name="twitter:description" content="hadoop"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://Izumiy0.github.io/p/%E8%B6%85%E8%AF%A6%E7%BB%86-hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%E4%BB%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%88%B0%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8/IIustraclones-Moebius.jpg' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/ava_hu_3de8dee02a294446.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Izumi Konata</a></h1>
+            <h2 class="site-description">欢迎阅读我的博客,此博客由【Hugo &#43; Stack】来进行搭建,主要分享个人生活和学习笔记</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页 | Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E-about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于 | about</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档 | Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索 | Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%8F%8B%E9%93%BE-links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链 | Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#一环境准备打好集群基础">一、环境准备：打好集群基础</a>
+      <ol>
+        <li><a href="#11-集群节点规划">1.1 集群节点规划</a></li>
+        <li><a href="#12-操作系统配置所有节点执行">1.2 操作系统配置（所有节点执行）</a>
+          <ol>
+            <li><a href="#1关闭防火墙与-selinux">（1）关闭防火墙与 SELinux</a></li>
+            <li><a href="#2配置主机名与-ip-映射">（2）配置主机名与 IP 映射</a></li>
+            <li><a href="#3安装-java-环境">（3）安装 Java 环境</a></li>
+          </ol>
+        </li>
+        <li><a href="#13-配置-ssh-免密登录主节点从节点">1.3 配置 SSH 免密登录（主节点→从节点）</a></li>
+      </ol>
+    </li>
+    <li><a href="#二hadoop-安装与核心配置">二、Hadoop 安装与核心配置</a>
+      <ol>
+        <li><a href="#21-下载并解压-hadoop主节点执行">2.1 下载并解压 Hadoop（主节点执行）</a></li>
+        <li><a href="#22-配置-hadoop-环境变量所有节点执行">2.2 配置 Hadoop 环境变量（所有节点执行）</a></li>
+        <li><a href="#23-修改-hadoop-核心配置文件主节点执行">2.3 修改 Hadoop 核心配置文件（主节点执行）</a>
+          <ol>
+            <li><a href="#1hadoop-envsh指定-java-路径">（1）hadoop-env.sh（指定 Java 路径）</a></li>
+            <li><a href="#2core-sitexml核心配置指定-namenode-地址">（2）core-site.xml（核心配置：指定 NameNode 地址）</a></li>
+            <li><a href="#3hdfs-sitexmlhdfs-配置副本数namenodedatanode-存储路径">（3）hdfs-site.xml（HDFS 配置：副本数、NameNode/DataNode 存储路径）</a></li>
+            <li><a href="#4mapred-sitexmlmapreduce-配置指定-yarn-为资源管理器">（4）mapred-site.xml（MapReduce 配置：指定 YARN 为资源管理器）</a></li>
+            <li><a href="#5yarn-sitexmlyarn-配置指定-resourcemanager-地址节点管理器环境">（5）yarn-site.xml（YARN 配置：指定 ResourceManager 地址、节点管理器环境）</a></li>
+          </ol>
+        </li>
+        <li><a href="#24-指定从节点主节点执行">2.4 指定从节点（主节点执行）</a></li>
+        <li><a href="#25-同步配置到所有从节点主节点执行">2.5 同步配置到所有从节点（主节点执行）</a></li>
+        <li><a href="#26-创建-hadoop-数据目录所有节点执行">2.6 创建 Hadoop 数据目录（所有节点执行）</a></li>
+      </ol>
+    </li>
+    <li><a href="#三格式化-hdfs-与启动集群">三、格式化 HDFS 与启动集群</a>
+      <ol>
+        <li><a href="#31-格式化-namenode仅主节点执行">3.1 格式化 NameNode（仅主节点执行）</a></li>
+        <li><a href="#32-启动-hadoop-集群主节点执行">3.2 启动 Hadoop 集群（主节点执行）</a>
+          <ol>
+            <li><a href="#1分步启动推荐新手">（1）分步启动（推荐新手）</a></li>
+            <li><a href="#2一键启动配置好-workers-后可用">（2）一键启动（配置好 workers 后可用）</a></li>
+          </ol>
+        </li>
+        <li><a href="#33-验证集群状态">3.3 验证集群状态</a>
+          <ol>
+            <li><a href="#1查看进程主节点执行">（1）查看进程（主节点执行）</a></li>
+            <li><a href="#2web-ui-验证">（2）Web UI 验证</a></li>
+            <li><a href="#3执行-hdfs-命令验证">（3）执行 HDFS 命令验证</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#四常见问题与避坑指南">四、常见问题与避坑指南</a></li>
+    <li><a href="#五总结">五、总结</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/%E8%B6%85%E8%AF%A6%E7%BB%86-hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%E4%BB%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%88%B0%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8/">
+                <img src="/p/%E8%B6%85%E8%AF%A6%E7%BB%86-hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%E4%BB%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%88%B0%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8/IIustraclones-Moebius_hu_d490e95d7cb73a44.jpg"
+                        srcset="/p/%E8%B6%85%E8%AF%A6%E7%BB%86-hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%E4%BB%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%88%B0%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8/IIustraclones-Moebius_hu_d490e95d7cb73a44.jpg 800w, /p/%E8%B6%85%E8%AF%A6%E7%BB%86-hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%E4%BB%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%88%B0%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8/IIustraclones-Moebius_hu_7ccc75270122943f.jpg 1600w"
+                        width="800" 
+                        height="296" 
+                        loading="lazy"
+                        alt="Featured image of post 超详细 Hadoop 集群搭建指南：从环境准备到成功启动" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/hadoop/" >
+                Hadoop
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E8%B6%85%E8%AF%A6%E7%BB%86-hadoop-%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97%E4%BB%8E%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%88%B0%E6%88%90%E5%8A%9F%E5%90%AF%E5%8A%A8/">超详细 Hadoop 集群搭建指南：从环境准备到成功启动</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            hadoop
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2025-09-10</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="超详细-hadoop-集群搭建指南从环境准备到成功启动">超详细 Hadoop 集群搭建指南：从环境准备到成功启动
+</h1><p>作为大数据生态体系的核心框架，Hadoop 的分布式集群部署是入门大数据技术的关键一步。本文将以<strong>Hadoop 3.3.4 版本</strong>为例，带大家从零开始搭建一个 3 节点（1 主 2 从）的 Hadoop 集群，全程附带关键配置代码和避坑要点，确保新手也能顺利完成搭建。</p>
+<h2 id="一环境准备打好集群基础">一、环境准备：打好集群基础
+</h2><p>在正式搭建前，需先完成硬件规划、操作系统配置和软件依赖安装，这是集群稳定运行的前提。</p>
+<h3 id="11-集群节点规划">1.1 集群节点规划
+</h3><p>本次搭建采用 “1 主 2 从” 架构，节点角色分配如下（可根据实际服务器数量调整）：</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>节点 IP</th>
+          <th>主机名</th>
+          <th>角色</th>
+          <th>硬件建议（最低配置）</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>192.168.1.10</td>
+          <td>hadoop01</td>
+          <td>NameNode、ResourceManager</td>
+          <td>2 核 4G 内存、50G 硬盘</td>
+      </tr>
+      <tr>
+          <td>192.168.1.11</td>
+          <td>hadoop02</td>
+          <td>DataNode、NodeManager</td>
+          <td>2 核 2G 内存、50G 硬盘</td>
+      </tr>
+      <tr>
+          <td>192.168.1.12</td>
+          <td>hadoop03</td>
+          <td>DataNode、NodeManager</td>
+          <td>2 核 2G 内存、50G 硬盘</td>
+      </tr>
+  </tbody>
+</table></div>
+<blockquote>
+<p>注意：所有节点需处于同一局域网，且关闭防火墙（避免端口拦截）。</p></blockquote>
+<h3 id="12-操作系统配置所有节点执行">1.2 操作系统配置（所有节点执行）
+</h3><p>本文使用<strong>CentOS 7</strong>系统，以下操作需以<code>root</code>用户或<code>sudo</code>权限执行：</p>
+<h4 id="1关闭防火墙与-selinux">（1）关闭防火墙与 SELinux
+</h4><p>Hadoop 集群各节点间需通过多个端口通信，关闭防火墙可避免配置复杂的端口规则：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">关闭防火墙（临时</span><span class="o">+</span><span class="err">永久）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">systemctl</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">firewalld</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">systemctl</span><span class="w"> </span><span class="n">disable</span><span class="w"> </span><span class="n">firewalld</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">关闭</span><span class="n">SELinux</span><span class="err">（临时</span><span class="o">+</span><span class="err">永久）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">setenforce</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">sed</span><span class="w"> </span><span class="o">-</span><span class="n">i</span><span class="w"> </span><span class="s1">&#39;s/SELINUX=enforcing/SELINUX=disabled/&#39;</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">selinux</span><span class="o">/</span><span class="n">config</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2配置主机名与-ip-映射">（2）配置主机名与 IP 映射
+</h4><ul>
+<li><strong>设置主机名</strong>（每个节点执行对应命令）：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="n">hadoop01节点</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hostnamectl</span><span class="w"> </span><span class="k">set</span><span class="o">-</span><span class="n">hostname</span><span class="w"> </span><span class="n">hadoop01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="n">hadoop02节点</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hostnamectl</span><span class="w"> </span><span class="k">set</span><span class="o">-</span><span class="n">hostname</span><span class="w"> </span><span class="n">hadoop02</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="n">hadoop03节点</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hostnamectl</span><span class="w"> </span><span class="k">set</span><span class="o">-</span><span class="n">hostname</span><span class="w"> </span><span class="n">hadoop03</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li><strong>配置 IP 映射</strong>（所有节点执行，将 IP 替换为你的实际节点 IP）：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">echo</span><span class="w"> </span><span class="s2">&#34;192.168.1.10 hadoop01&#34;</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="s2">&#34;192.168.1.11 hadoop02&#34;</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="s2">&#34;192.168.1.12 hadoop03&#34;</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="3安装-java-环境">（3）安装 Java 环境
+</h4><p>Hadoop 依赖 Java（需 JDK 8 及以上版本），推荐使用 OpenJDK：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">安装</span><span class="n">OpenJDK</span><span class="w"> </span><span class="mi">8</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">yum</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="o">-</span><span class="n">y</span><span class="w"> </span><span class="n">java</span><span class="o">-</span><span class="mi">1</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span><span class="o">-</span><span class="n">openjdk</span><span class="o">-</span><span class="n">devel</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">验证安装（出现版本信息则成功）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">java</span><span class="w"> </span><span class="o">-</span><span class="k">version</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">javac</span><span class="w"> </span><span class="o">-</span><span class="k">version</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">配置</span><span class="n">JAVA_HOME环境变量</span><span class="err">（所有节点执行）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="s2">&#34;export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk&#34;</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="s2">&#34;export PATH=$PATH:$JAVA_HOME/bin&#34;</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">source</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="w">  </span><span class="o">#</span><span class="w"> </span><span class="err">生效配置</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="13-配置-ssh-免密登录主节点从节点">1.3 配置 SSH 免密登录（主节点→从节点）
+</h3><p>Hadoop 主节点（hadoop01）需通过 SSH 免密登录到所有从节点，避免启动集群时输入密码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">在</span><span class="n">hadoop01节点生成SSH密钥</span><span class="err">（一路回车，不设置密码）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span><span class="w"> </span><span class="o">-</span><span class="n">t</span><span class="w"> </span><span class="n">rsa</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">将公钥分发到所有节点（包括自身）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ssh</span><span class="o">-</span><span class="k">copy</span><span class="o">-</span><span class="n">id</span><span class="w"> </span><span class="n">hadoop01</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ssh</span><span class="o">-</span><span class="k">copy</span><span class="o">-</span><span class="n">id</span><span class="w"> </span><span class="n">hadoop02</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ssh</span><span class="o">-</span><span class="k">copy</span><span class="o">-</span><span class="n">id</span><span class="w"> </span><span class="n">hadoop03</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">验证免密登录（无密码提示则成功）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ssh</span><span class="w"> </span><span class="n">hadoop02</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="二hadoop-安装与核心配置">二、Hadoop 安装与核心配置
+</h2><h3 id="21-下载并解压-hadoop主节点执行">2.1 下载并解压 Hadoop（主节点执行）
+</h3><p>从 Apache 官网下载 Hadoop 安装包，推荐使用稳定版 3.3.4：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">下载</span><span class="n">Hadoop</span><span class="err">（也可手动下载后上传）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">wget</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">archive</span><span class="p">.</span><span class="n">apache</span><span class="p">.</span><span class="n">org</span><span class="o">/</span><span class="n">dist</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mi">3</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">4</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mi">3</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">解压到</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local目录</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">tar</span><span class="w"> </span><span class="o">-</span><span class="n">zxvf</span><span class="w"> </span><span class="n">hadoop</span><span class="o">-</span><span class="mi">3</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">4</span><span class="p">.</span><span class="n">tar</span><span class="p">.</span><span class="n">gz</span><span class="w"> </span><span class="o">-</span><span class="k">C</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">重命名为</span><span class="n">hadoop</span><span class="err">（方便后续操作）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mv</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="mi">3</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">4</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="22-配置-hadoop-环境变量所有节点执行">2.2 配置 Hadoop 环境变量（所有节点执行）
+</h3><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">编辑</span><span class="n">profile文件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">vim</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">添加以下内容（末尾添加）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">export</span><span class="w"> </span><span class="n">HADOOP_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">export</span><span class="w"> </span><span class="n">PATH</span><span class="o">=</span><span class="err">$</span><span class="n">PATH</span><span class="p">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">bin</span><span class="p">:</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">sbin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">生效配置</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">source</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">验证（出现版本信息则成功）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hadoop</span><span class="w"> </span><span class="k">version</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="23-修改-hadoop-核心配置文件主节点执行">2.3 修改 Hadoop 核心配置文件（主节点执行）
+</h3><p>Hadoop 配置文件位于<code>$HADOOP_HOME/etc/hadoop/</code>目录，需修改以下 5 个关键文件：</p>
+<h4 id="1hadoop-envsh指定-java-路径">（1）hadoop-env.sh（指定 Java 路径）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">vim</span><span class="w"> </span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">hadoop</span><span class="o">-</span><span class="n">env</span><span class="p">.</span><span class="n">sh</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">添加</span><span class="n">Java环境变量</span><span class="err">（替换为你的</span><span class="n">JAVA_HOME路径</span><span class="err">）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">export</span><span class="w"> </span><span class="n">JAVA_HOME</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">jvm</span><span class="o">/</span><span class="n">java</span><span class="o">-</span><span class="mi">1</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span><span class="o">-</span><span class="n">openjdk</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2core-sitexml核心配置指定-namenode-地址">（2）core-site.xml（核心配置：指定 NameNode 地址）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">vim</span><span class="w"> </span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">core</span><span class="o">-</span><span class="n">site</span><span class="p">.</span><span class="n">xml</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">在</span><span class="o">&lt;</span><span class="n">configuration</span><span class="o">&gt;</span><span class="err">标签内添加：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">fs</span><span class="p">.</span><span class="n">defaultFS</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;!</span><span class="c1">-- NameNode地址：hdfs://主机名:端口 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="n">hdfs</span><span class="p">:</span><span class="o">//</span><span class="n">hadoop01</span><span class="p">:</span><span class="mi">9000</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">hadoop</span><span class="p">.</span><span class="n">tmp</span><span class="p">.</span><span class="n">dir</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;!</span><span class="c1">-- Hadoop临时目录（需手动创建） --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">tmp</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="3hdfs-sitexmlhdfs-配置副本数namenodedatanode-存储路径">（3）hdfs-site.xml（HDFS 配置：副本数、NameNode/DataNode 存储路径）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">vim</span><span class="w"> </span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">hdfs</span><span class="o">-</span><span class="n">site</span><span class="p">.</span><span class="n">xml</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">在</span><span class="o">&lt;</span><span class="n">configuration</span><span class="o">&gt;</span><span class="err">标签内添加：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">dfs</span><span class="p">.</span><span class="n">replication</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;!</span><span class="c1">-- 副本数（建议&lt;=从节点数，这里设为2） --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">dfs</span><span class="p">.</span><span class="n">namenode</span><span class="p">.</span><span class="n">name</span><span class="p">.</span><span class="n">dir</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;!</span><span class="c1">-- NameNode数据存储路径（需手动创建） --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">dfs</span><span class="o">/</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">dfs</span><span class="p">.</span><span class="n">datanode</span><span class="p">.</span><span class="k">data</span><span class="p">.</span><span class="n">dir</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;!</span><span class="c1">-- DataNode数据存储路径（需手动创建） --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">dfs</span><span class="o">/</span><span class="k">data</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;!</span><span class="c1">-- 关闭HDFS权限检查（新手友好） --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">dfs</span><span class="p">.</span><span class="n">permissions</span><span class="p">.</span><span class="n">enabled</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="k">false</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="4mapred-sitexmlmapreduce-配置指定-yarn-为资源管理器">（4）mapred-site.xml（MapReduce 配置：指定 YARN 为资源管理器）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">vim</span><span class="w"> </span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">mapred</span><span class="o">-</span><span class="n">site</span><span class="p">.</span><span class="n">xml</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">在</span><span class="o">&lt;</span><span class="n">configuration</span><span class="o">&gt;</span><span class="err">标签内添加：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">mapreduce</span><span class="p">.</span><span class="n">framework</span><span class="p">.</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;!</span><span class="c1">-- 指定MapReduce运行在YARN上 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="n">yarn</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">mapreduce</span><span class="p">.</span><span class="n">application</span><span class="p">.</span><span class="n">classpath</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;!</span><span class="c1">-- Hadoop 3.x需指定classpath，避免启动报错 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="k">share</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">mapreduce</span><span class="cm">/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*&lt;/value&gt;
+</span></span></span><span class="line"><span class="cl"><span class="cm">
+</span></span></span><span class="line"><span class="cl"><span class="cm">&lt;/property&gt;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="5yarn-sitexmlyarn-配置指定-resourcemanager-地址节点管理器环境">（5）yarn-site.xml（YARN 配置：指定 ResourceManager 地址、节点管理器环境）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">vim</span><span class="w"> </span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">yarn</span><span class="o">-</span><span class="n">site</span><span class="p">.</span><span class="n">xml</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">在</span><span class="o">&lt;</span><span class="n">configuration</span><span class="o">&gt;</span><span class="err">标签内添加：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">yarn</span><span class="p">.</span><span class="n">resourcemanager</span><span class="p">.</span><span class="n">hostname</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;!</span><span class="c1">-- ResourceManager运行在主节点hadoop01 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="n">hadoop01</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">yarn</span><span class="p">.</span><span class="n">nodemanager</span><span class="p">.</span><span class="n">aux</span><span class="o">-</span><span class="n">services</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;!</span><span class="c1">-- 启用MapReduce的shuffle服务 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="n">mapreduce_shuffle</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;!</span><span class="c1">-- 解决Hadoop 3.x内存溢出问题 --&gt;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">yarn</span><span class="p">.</span><span class="n">nodemanager</span><span class="p">.</span><span class="n">vmem</span><span class="o">-</span><span class="k">check</span><span class="o">-</span><span class="n">enabled</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="o">&lt;</span><span class="n">value</span><span class="o">&gt;</span><span class="k">false</span><span class="o">&lt;/</span><span class="n">value</span><span class="o">&gt;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">&lt;/</span><span class="n">property</span><span class="o">&gt;</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="24-指定从节点主节点执行">2.4 指定从节点（主节点执行）
+</h3><p>编辑<code>workers</code>文件（Hadoop 3.x 用<code>workers</code>，2.x 用<code>slaves</code>），列出所有从节点主机名：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">vim</span><span class="w"> </span><span class="err">$</span><span class="n">HADOOP_HOME</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">workers</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">删除原有内容，添加以下两行（从节点主机名）：</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hadoop02</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hadoop03</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="25-同步配置到所有从节点主节点执行">2.5 同步配置到所有从节点（主节点执行）
+</h3><p>将主节点配置好的 Hadoop 目录同步到所有从节点，避免重复配置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">同步到</span><span class="n">hadoop02</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">scp</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="w"> </span><span class="n">hadoop02</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">同步到</span><span class="n">hadoop03</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">scp</span><span class="w"> </span><span class="o">-</span><span class="n">r</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="w"> </span><span class="n">hadoop03</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">同步环境变量配置（所有从节点执行</span><span class="n">source生效</span><span class="err">）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">scp</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="w"> </span><span class="n">hadoop02</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">scp</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="w"> </span><span class="n">hadoop03</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="26-创建-hadoop-数据目录所有节点执行">2.6 创建 Hadoop 数据目录（所有节点执行）
+</h3><p>根据<code>hdfs-site.xml</code>中配置的路径，创建对应的目录：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">tmp</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">dfs</span><span class="o">/</span><span class="n">name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="n">dfs</span><span class="o">/</span><span class="k">data</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">设置目录权限（避免权限不足）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">chown</span><span class="w"> </span><span class="o">-</span><span class="n">R</span><span class="w"> </span><span class="err">$</span><span class="k">USER</span><span class="p">:</span><span class="err">$</span><span class="k">USER</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">hadoop</span><span class="o">/</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="三格式化-hdfs-与启动集群">三、格式化 HDFS 与启动集群
+</h2><h3 id="31-格式化-namenode仅主节点执行">3.1 格式化 NameNode（仅主节点执行）
+</h3><p><strong>注意：仅首次搭建时执行一次，重复执行会清空 HDFS 数据！</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">hdfs</span><span class="w"> </span><span class="n">namenode</span><span class="w"> </span><span class="o">-</span><span class="n">format</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>执行成功后，会显示<code>successfully formatted</code>字样，同时在<code>/usr/local/hadoop/dfs/name</code>目录下生成初始化数据。</p>
+<h3 id="32-启动-hadoop-集群主节点执行">3.2 启动 Hadoop 集群（主节点执行）
+</h3><p>Hadoop 提供两种启动方式：分步启动（便于排查问题）和一键启动（高效）。</p>
+<h4 id="1分步启动推荐新手">（1）分步启动（推荐新手）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">启动</span><span class="n">HDFS</span><span class="err">（</span><span class="n">NameNode</span><span class="err">、</span><span class="n">DataNode</span><span class="err">）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hdfs</span><span class="w"> </span><span class="c1">--daemon start namenode
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hdfs</span><span class="w"> </span><span class="c1">--daemon start datanode
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">启动</span><span class="n">YARN</span><span class="err">（</span><span class="n">ResourceManager</span><span class="err">、</span><span class="n">NodeManager</span><span class="err">）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">yarn</span><span class="w"> </span><span class="c1">--daemon start resourcemanager
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">yarn</span><span class="w"> </span><span class="c1">--daemon start nodemanager
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h4 id="2一键启动配置好-workers-后可用">（2）一键启动（配置好 workers 后可用）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">启动所有</span><span class="n">HDFS和YARN进程</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">start</span><span class="o">-</span><span class="n">dfs</span><span class="p">.</span><span class="n">sh</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">start</span><span class="o">-</span><span class="n">yarn</span><span class="p">.</span><span class="n">sh</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">或直接启动所有进程（包括</span><span class="n">HistoryServer</span><span class="err">）</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">start</span><span class="o">-</span><span class="k">all</span><span class="p">.</span><span class="n">sh</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="33-验证集群状态">3.3 验证集群状态
+</h3><h4 id="1查看进程主节点执行">（1）查看进程（主节点执行）
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">jps</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>主节点应显示以下进程：</p>
+<ul>
+<li>
+<p>NameNode</p>
+</li>
+<li>
+<p>ResourceManager</p>
+</li>
+<li>
+<p>SecondaryNameNode（HDFS 辅助节点）</p>
+</li>
+<li>
+<p>Jps</p>
+</li>
+</ul>
+<p>从节点（hadoop02、hadoop03）应显示：</p>
+<ul>
+<li>
+<p>DataNode</p>
+</li>
+<li>
+<p>NodeManager</p>
+</li>
+<li>
+<p>Jps</p>
+</li>
+</ul>
+<h4 id="2web-ui-验证">（2）Web UI 验证
+</h4><p>Hadoop 提供 Web 界面查看集群状态，需确保浏览器能访问节点 IP：</p>
+<ul>
+<li>
+<p><strong>HDFS 状态</strong>：访问 <code>http://hadoop01:9870</code>（Hadoop 3.x 端口为 9870，2.x 为 50070），在「Datanodes」页面可看到 2 个从节点在线。</p>
+</li>
+<li>
+<p><strong>YARN 状态</strong>：访问 <code>http://hadoop01:8088</code>，在「Nodes」页面可看到 2 个 NodeManager 节点。</p>
+</li>
+</ul>
+<h4 id="3执行-hdfs-命令验证">（3）执行 HDFS 命令验证
+</h4><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">创建测试目录</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hdfs</span><span class="w"> </span><span class="n">dfs</span><span class="w"> </span><span class="o">-</span><span class="n">mkdir</span><span class="w"> </span><span class="o">/</span><span class="n">test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">上传本地文件到</span><span class="n">HDFS</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">echo</span><span class="w"> </span><span class="s2">&#34;hello hadoop&#34;</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">test</span><span class="p">.</span><span class="n">txt</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hdfs</span><span class="w"> </span><span class="n">dfs</span><span class="w"> </span><span class="o">-</span><span class="n">put</span><span class="w"> </span><span class="n">test</span><span class="p">.</span><span class="n">txt</span><span class="w"> </span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">查看</span><span class="n">HDFS文件</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hdfs</span><span class="w"> </span><span class="n">dfs</span><span class="w"> </span><span class="o">-</span><span class="n">ls</span><span class="w"> </span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">hdfs</span><span class="w"> </span><span class="n">dfs</span><span class="w"> </span><span class="o">-</span><span class="n">cat</span><span class="w"> </span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">txt</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>若能正常执行上述命令，说明 HDFS 功能正常。</p>
+<h2 id="四常见问题与避坑指南">四、常见问题与避坑指南
+</h2><ol>
+<li>
+<p><strong>启动 DataNode 失败？</strong></p>
+<p>原因：重复格式化 NameNode 导致 DataNode 的 clusterID 与 NameNode 不匹配。</p>
+<p>解决：删除所有节点的<code>/usr/local/hadoop/dfs/data</code>目录，重新格式化 NameNode（仅一次）。</p>
+</li>
+<li>
+<p><strong>Web UI 无法访问？</strong></p>
+<p>原因：防火墙未关闭、IP 映射配置错误或端口被占用。</p>
+<p>解决：重新执行防火墙关闭命令，检查<code>/etc/hosts</code>配置，用<code>netstat -tunlp | grep 9870</code>查看端口是否被占用。</p>
+</li>
+<li>
+<p><strong>YARN 启动后 NodeManager 不在线？</strong></p>
+<p>原因：<code>yarn-site.xml</code>配置错误或内存不足。</p>
+<p>解决：检查<code>yarn.resourcemanager.hostname</code>是否为 hadoop01，添加<code>yarn.nodemanager.vmem-check-enabled=false</code>关闭内存检查。</p>
+</li>
+</ol>
+<h2 id="五总结">五、总结
+</h2><p>本文详细讲解了 3 节点 Hadoop 集群的搭建流程，核心步骤可概括为：<strong>环境准备→配置免密→Hadoop 配置→同步节点→格式化启动→验证状态</strong>。对于新手而言，重点关注 IP 映射、SSH 免密、配置文件路径和权限这几个环节，即可避免大部分问题。</p>
+<p>后续可进一步学习 Hadoop 的分布式计算（MapReduce）、YARN 资源调度等功能，或搭建 HBase、Spark 等生态组件，逐步深入大数据技术领域。</p>
+<blockquote>
+<p>（注：文档部分内容由 AI 生成）</p></blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/hadoop/">Hadoop</a>
+        
+            <a href="/tags/hdfs/">Hdfs</a>
+        
+            <a href="/tags/yarn/">Yarn</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Izumiy0
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.a501cb13710865566ef2d7bab6cbcaf43453bf07581fae647e885c024902d399.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+<script src=/js/pjax.min.js></script>
+<script src=/js/topbar.min.js></script>
+<script>
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    pjax = new Pjax({
+      
+      selectors: [
+            ".main-container"
+        ]
+    })
+    
+    
+    topbar.config({
+        barColors: {
+            '0': 'rgba(255,  255, 255, 1)', 
+            '1.0': 'rgba(0, 149, 234,  1)' 
+        }
+    })
+    
+    
+    document.addEventListener('pjax:send', function() {
+      
+      topbar.show();
+      
+    });
+    
+    document.addEventListener('pjax:complete', function() {
+      
+      topbar.hide();
+      
+    });
+    
+    document.addEventListener('pjax:error', function(e) {
+      console.error('Pjax错误:', e);
+    });
+    pjax._handleResponse = pjax.handleResponse;
+    pjax.handleResponse = function(responseText, request, href, options) {
+        if (request.responseText.match("<html")) {
+            if (responseText) {
+                
+                let newDom = new DOMParser().parseFromString(responseText, 'text/html');
+                
+                let bodyClass = newDom.body.className;
+                document.body.setAttribute("class", bodyClass)
+            }
+            
+            pjax._handleResponse(responseText, request, href, options);
+        } else {
+            
+        }
+    }
+    
+    document.addEventListener('pjax:complete', () => {
+        
+        window.Stack.init();
+    })
+  });
+</script>
+
+
+
+<style>
+    .highlight {
+         
+        max-height: 400px;
+        overflow: hidden;
+    }
+
+    .code-show {
+        max-height: none !important;
+    }
+
+    .code-more-box {
+        width: 100%;
+        padding-top: 78px;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0)), to(#fff));
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+
+    .code-more-btn {
+        display: block;
+        margin: auto;
+        width: 44px;
+        height: 22px;
+        background: #f0f0f5;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        padding-top: 6px;
+        cursor: pointer;
+    }
+
+    .code-more-img {
+        cursor: pointer !important;
+        display: block;
+        margin: auto;
+        width: 22px;
+        height: 16px;
+    }
+</style>
+
+<script>
+  function initCodeMoreBox() {
+    let codeBlocks = document.querySelectorAll(".highlight");
+    if (!codeBlocks) {
+      return;
+    }
+    codeBlocks.forEach(codeBlock => {
+      
+      if (codeBlock.scrollHeight <= codeBlock.clientHeight) {
+        return;
+      }
+      
+      
+      let codeMoreBox = document.createElement('div');
+      codeMoreBox.classList.add('code-more-box');
+      
+      let codeMoreBtn = document.createElement('span');
+      codeMoreBtn.classList.add('code-more-btn');
+      codeMoreBtn.addEventListener('click', () => {
+        codeBlock.classList.add('code-show');
+        codeMoreBox.style.display = 'none';
+        
+        window.dispatchEvent(new Event('resize'))
+      })
+      
+      let img = document.createElement('img');
+      img.classList.add('code-more-img');
+      img.src = "https://Izumiy0.github.io/icons/codeMore.png"
+      
+      codeMoreBtn.appendChild(img);
+      codeMoreBox.appendChild(codeMoreBtn);
+      codeBlock.appendChild(codeMoreBox)
+    })
+  }
+  
+  initCodeMoreBox();
+</script>
+
+
+
+<style>
+  @font-face {
+    font-family: 'patrickHand';
+    src: url(/font/linja_waso_100font/linja-waso.ttf) format('truetype');
+  }
+
+  :root {
+    --base-font-family: 'patrickHand';
+    --code-font-family: 'patrickHand';
+  }
+</style>
+
+
+<style>
+    #TableOfContents > ul, ol {
+        ul, ol {
+            display: none;
+        }
+        .open {
+            display: block;
+        }
+    }
+</style>
+<script>
+    function initTocHide() {
+        
+        let toc = document.querySelector(".widget--toc");
+        if (!toc) {
+            return;
+        }
+        
+        window.addEventListener('scroll', function() {
+            
+            let openUl = document.querySelectorAll(".open");
+            if (openUl.length > 0) {
+              openUl.forEach((ul) => {
+                ul.classList.remove("open")
+              })
+            }
+            
+            let currentLi = document.querySelector(".active-class");
+            if (!currentLi) {
+                return
+            }
+            
+            if (currentLi.children.length > 1) {
+                currentLi.children[1].classList.add("open")
+            }
+            
+            let ul = currentLi.parentElement;
+            do {
+                ul.classList.add("open");
+                ul = ul.parentElement.parentElement
+            } while (ul !== undefined && (ul.localName === 'ul' || ul.localName === 'ol'))
+        });
+    }
+    initTocHide()
+</script>
+
+
+
+<div id="particles-js"></div>
+<script src=/background/particles.min.js></script>
+<script>
+  particlesJS.load('particles-js', "/background/particlesjs-config.json", function() {
+    console.log('particles.js loaded - callback');
+  });
+</script>
+<style>
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+  }
+</style>
+
+
+<script>
+    async function renderKaTeX() {
+        
+        let katex = document.querySelector(".math-katex");
+        if (!katex) {
+            return;
+        }
+        
+        while (typeof renderMathInElement !== 'function') {
+            await delay(500);
+        }        
+        
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });
+    }
+    
+    
+
+    function delay(time) {
+        return new Promise(resolve => {
+            setTimeout(resolve, time)
+        })
+    }
+
+    document.addEventListener('pjax:complete', () => {
+        renderKaTeX();
+    })
+</script>
+
+
+
+<script>
+    
+
+
+    
+    window.waifuInitialized = false;
+
+    
+    
+    const live2d_path = 'https://fastly.jsdelivr.net/npm/live2d-widgets@1.0.0-rc.6/dist/';
+    
+    const cssPath = "/waifu/waifu.css"
+    const waifuTipsJsonPath = "/waifu/waifu-tips.json" 
+    const live2dJsPath = "/waifu/live2d.min.js"
+    
+    
+    
+    function loadExternalResource(url, type) {
+        return new Promise((resolve, reject) => {
+            let tag;
+
+            if (type === 'css') {
+                tag = document.createElement('link');
+                tag.rel = 'stylesheet';
+                tag.href = url;
+            }
+            else if (type === 'js') {
+                tag = document.createElement('script');
+                tag.type = 'module';
+                tag.src = url;
+            }
+            if (tag) {
+                tag.onload = () => resolve(url);
+                tag.onerror = () => reject(url);
+                document.head.appendChild(tag);
+            }
+        });
+    }
+
+    
+    function initWaifu() {
+        if (window.waifuInitialized) {
+            console.log('看板娘已初始化，跳过重复初始化');
+            return;
+        }
+
+        (async () => {
+            
+            
+            
+
+            
+            
+            const OriginalImage = window.Image;
+            window.Image = function (...args) {
+                const img = new OriginalImage(...args);
+                img.crossOrigin = "anonymous";
+                return img;
+            };
+            window.Image.prototype = OriginalImage.prototype;
+            
+            
+            
+            await Promise.all([
+                loadExternalResource(cssPath, 'css'),
+                loadExternalResource(live2d_path + 'waifu-tips.js', 'js'),
+                loadExternalResource(live2dJsPath, "js")
+            ]);
+            
+            
+            
+            initWidget({
+                waifuPath: waifuTipsJsonPath,
+                
+                cubism2Path: live2dJsPath,
+                cubism5Path: 'https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js',
+                tools: ['hitokoto', 'asteroids', 'switch-model', 'switch-texture', 'photo', 'info', 'quit'],
+                logLevel: 'warn',
+                drag: false,
+            });
+            
+            window.waifuInitialized = true;
+            console.log('看板娘初始化完成');
+        })();
+    }
+
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initWaifu);
+    } else {
+        initWaifu();
+    }
+
+    
+</script>
+    </body>
+</html>
