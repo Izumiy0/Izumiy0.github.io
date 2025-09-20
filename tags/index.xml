@@ -7,7 +7,47 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>Izumiy0</copyright>
-        <lastBuildDate>Wed, 10 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://Izumiy0.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 19 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://Izumiy0.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Kubernetes</title>
+        <link>https://Izumiy0.github.io/tags/kubernetes/</link>
+        <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/tags/kubernetes/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>https://Izumiy0.github.io/tags/linux/</link>
+        <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/tags/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Minikube</title>
+        <link>https://Izumiy0.github.io/tags/minikube/</link>
+        <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/tags/minikube/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Ubuntu</title>
+        <link>https://Izumiy0.github.io/tags/ubuntu/</link>
+        <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/tags/ubuntu/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>运维技术</title>
+        <link>https://Izumiy0.github.io/tags/%E8%BF%90%E7%BB%B4%E6%8A%80%E6%9C%AF/</link>
+        <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/tags/%E8%BF%90%E7%BB%B4%E6%8A%80%E6%9C%AF/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Hadoop</title>
         <link>https://Izumiy0.github.io/tags/hadoop/</link>
         <pubDate>Wed, 10 Sep 2025 00:00:00 +0000</pubDate>
@@ -29,6 +69,38 @@
         <pubDate>Wed, 10 Sep 2025 00:00:00 +0000</pubDate>
         
         <guid>https://Izumiy0.github.io/tags/yarn/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Conda</title>
+        <link>https://Izumiy0.github.io/tags/conda/</link>
+        <pubDate>Tue, 02 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/tags/conda/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Docker</title>
+        <link>https://Izumiy0.github.io/tags/docker/</link>
+        <pubDate>Tue, 02 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/tags/docker/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Docker-Compose</title>
+        <link>https://Izumiy0.github.io/tags/docker-compose/</link>
+        <pubDate>Tue, 02 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/tags/docker-compose/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Python</title>
+        <link>https://Izumiy0.github.io/tags/python/</link>
+        <pubDate>Tue, 02 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/tags/python/</guid>
         <description></description>
         </item>
         <item>

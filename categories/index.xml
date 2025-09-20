@@ -7,12 +7,76 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>Izumiy0</copyright>
-        <lastBuildDate>Wed, 10 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://Izumiy0.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 19 Sep 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://Izumiy0.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Kubernetes</title>
+        <link>https://Izumiy0.github.io/categories/kubernetes/</link>
+        <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/kubernetes/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Linux</title>
+        <link>https://Izumiy0.github.io/categories/linux/</link>
+        <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/linux/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>毕业设计</title>
+        <link>https://Izumiy0.github.io/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/</link>
+        <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>运维技术</title>
+        <link>https://Izumiy0.github.io/categories/%E8%BF%90%E7%BB%B4%E6%8A%80%E6%9C%AF/</link>
+        <pubDate>Fri, 19 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/%E8%BF%90%E7%BB%B4%E6%8A%80%E6%9C%AF/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Hadoop</title>
         <link>https://Izumiy0.github.io/categories/hadoop/</link>
         <pubDate>Wed, 10 Sep 2025 00:00:00 +0000</pubDate>
         
         <guid>https://Izumiy0.github.io/categories/hadoop/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Conda</title>
+        <link>https://Izumiy0.github.io/categories/conda/</link>
+        <pubDate>Tue, 02 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/conda/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Docker</title>
+        <link>https://Izumiy0.github.io/categories/docker/</link>
+        <pubDate>Tue, 02 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/docker/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Python</title>
+        <link>https://Izumiy0.github.io/categories/python/</link>
+        <pubDate>Tue, 02 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/python/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Ubuntu</title>
+        <link>https://Izumiy0.github.io/categories/ubuntu/</link>
+        <pubDate>Tue, 02 Sep 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://Izumiy0.github.io/categories/ubuntu/</guid>
         <description></description>
         </item>
         <item>
