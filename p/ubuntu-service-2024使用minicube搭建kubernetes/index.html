@@ -6,14 +6,14 @@
 
 <link rel='canonical' href='https://Izumiy0.github.io/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/'>
 
-<link rel="stylesheet" href="/scss/style.min.b41fbeb1758861b170a462ca5c5b93b973caa976a8f1c39fb877a49158ef60fb.css"><meta property='og:title' content="Ubuntu-service-2024使用minicube搭建kubernetes">
+<link rel="stylesheet" href="/scss/style.min.21224093719c250cceb7c5654fb6cecfe9c4df52c14e73271226af30af181624.css"><meta property='og:title' content="Ubuntu-service-2024使用minicube搭建kubernetes">
 <meta property='og:description' content="Ubuntu-service-2024使用minicube搭建kubernetes">
 <meta property='og:url' content='https://Izumiy0.github.io/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/'>
 <meta property='og:site_name' content='Izumi Konata'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Ubuntu' /><meta property='article:tag' content='minikube' /><meta property='article:tag' content='kubernetes' /><meta property='article:tag' content='运维技术' /><meta property='article:published_time' content='2025-09-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-09-19T00:00:00&#43;00:00'/><meta property='og:image' content='https://Izumiy0.github.io/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/kubernetes.png' />
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='Ubuntu' /><meta property='article:tag' content='minikube' /><meta property='article:tag' content='kubernetes' /><meta property='article:tag' content='运维技术' /><meta property='article:published_time' content='2025-09-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-09-19T00:00:00&#43;00:00'/><meta property='og:image' content='https://Izumiy0.github.io/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/minikube.png' />
 <meta name="twitter:title" content="Ubuntu-service-2024使用minicube搭建kubernetes">
 <meta name="twitter:description" content="Ubuntu-service-2024使用minicube搭建kubernetes"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://Izumiy0.github.io/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/kubernetes.png' />
+    <meta name="twitter:image" content='https://Izumiy0.github.io/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/minikube.png' />
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -230,7 +230,6 @@
     <li><a href="#官方文档">官方文档</a>
       <ol>
         <li><a href="#常用命令">常用命令</a></li>
-        <li><a href="#运行第一个-kubernetes-应用">运行第一个 Kubernetes 应用</a></li>
       </ol>
     </li>
     <li><a href="#一般查看官方文档就行下面是我遇到的问题和解决方案">一般查看官方文档就行,下面是我遇到的问题和解决方案</a>
@@ -246,6 +245,7 @@
         </li>
       </ol>
     </li>
+    <li><a href="#运行第一个-kubernetes-应用">运行第一个 Kubernetes 应用</a></li>
   </ol>
 </nav>
         </div>
@@ -261,10 +261,10 @@
     <header class="article-header">
         <div class="article-image">
             <a href="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/">
-                <img src="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/kubernetes_hu_87016ec52124ad2.png"
-                        srcset="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/kubernetes_hu_87016ec52124ad2.png 800w, /p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/kubernetes_hu_b74f0f94cbb77f16.png 1600w"
+                <img src="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/minikube_hu_26ceb120fb5f156.png"
+                        srcset="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/minikube_hu_26ceb120fb5f156.png 800w, /p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/minikube_hu_fd72332de8141079.png 1600w"
                         width="800" 
-                        height="325" 
+                        height="331" 
                         loading="lazy"
                         alt="Featured image of post Ubuntu-service-2024使用minicube搭建kubernetes" />
                 
@@ -280,8 +280,8 @@
                 Linux
             </a>
         
-            <a href="/categories/kubernetes/" >
-                Kubernetes
+            <a href="/categories/kubernetes/" style="background-color: #2a9d8f; color: #fff;">
+                kubernetes
             </a>
         
             <a href="/categories/%E8%BF%90%E7%BB%B4%E6%8A%80%E6%9C%AF/" >
@@ -362,38 +362,21 @@
 </span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">检查</span><span class="w"> </span><span class="n">minikube</span><span class="w"> </span><span class="err">状态</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">minikube</span><span class="w"> </span><span class="n">status</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">查看集群信息</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">kubectl</span><span class="w"> </span><span class="k">cluster</span><span class="o">-</span><span class="n">info</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">查看节点信息</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">kubectl</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="n">nodes</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">进入</span><span class="w"> </span><span class="n">minikube</span><span class="w"> </span><span class="err">环境</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">minikube</span><span class="w"> </span><span class="n">ssh</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">检查集群状态</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">minikube</span><span class="w"> </span><span class="n">status</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">查看所有</span><span class="w"> </span><span class="n">Pod</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">kubectl</span><span class="w"> </span><span class="k">get</span><span class="w"> </span><span class="n">pods</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">查看</span><span class="w"> </span><span class="n">Pod</span><span class="w"> </span><span class="err">日志</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">kubectl</span><span class="w"> </span><span class="n">logs</span><span class="w"> </span><span class="o">&lt;</span><span class="n">pod</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><h3 id="运行第一个-kubernetes-应用">运行第一个 Kubernetes 应用
-</h3><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">部署</span><span class="w"> </span><span class="n">Nginx</span><span class="w"> </span><span class="err">服务</span><span class="p">,</span><span class="w"> </span><span class="err">需要</span><span class="n">docker里有nginx镜像</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">kubectl</span><span class="w"> </span><span class="k">create</span><span class="w"> </span><span class="n">deployment</span><span class="w"> </span><span class="n">nginx</span><span class="w"> </span><span class="c1">--image=nginx
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">访问服务</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">minikube</span><span class="w"> </span><span class="n">service</span><span class="w"> </span><span class="n">nginx</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 检查 minikube 状态</span>
+</span></span><span class="line"><span class="cl">minikube status
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看集群信息</span>
+</span></span><span class="line"><span class="cl">minikube kubectl --  cluster-info
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看节点信息</span>
+</span></span><span class="line"><span class="cl">minikube kubectl --  get nodes
+</span></span><span class="line"><span class="cl"><span class="c1"># 进入 minikube 环境</span>
+</span></span><span class="line"><span class="cl">minikube ssh
+</span></span><span class="line"><span class="cl"><span class="c1"># 检查集群状态</span>
+</span></span><span class="line"><span class="cl">minikube status
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看所有 Pod</span>
+</span></span><span class="line"><span class="cl">minikube kubectl --  get pods
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看 Pod 日志</span>
+</span></span><span class="line"><span class="cl">minikube kubectl --  logs &lt;pod-name&gt;
+</span></span></code></pre></td></tr></table>
 </div>
 </div><hr>
 <h2 id="一般查看官方文档就行下面是我遇到的问题和解决方案">一般查看官方文档就行,下面是我遇到的问题和解决方案
@@ -507,6 +490,54 @@
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">minikube</span><span class="w"> </span><span class="k">delete</span><span class="w"> </span><span class="c1">--all --purge
 </span></span></span></code></pre></td></tr></table>
 </div>
+</div><hr>
+<h2 id="运行第一个-kubernetes-应用">运行第一个 Kubernetes 应用
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 部署 Nginx 服务, 需要docker里有nginx镜像</span>
+</span></span><span class="line"><span class="cl">minikube kubectl -- create deployment fuzzing --image<span class="o">=</span>fuzzing
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># --port=8000 指要监听容器的80端口, 也就是镜像提供服务的端口</span>
+</span></span><span class="line"><span class="cl">minikube kubectl -- create deployment fuzzing --image<span class="o">=</span>utibetctf/fuzzing --port<span class="o">=</span><span class="m">80</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># --port=8000 service的端口</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># --target-port 80 转发到 Pod 的哪个端口</span>
+</span></span><span class="line"><span class="cl">minikube kubectl --  expose deployment fuzzing --type<span class="o">=</span>NodePort --port<span class="o">=</span><span class="m">8000</span> --target-port <span class="m">80</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 访问服务</span>
+</span></span><span class="line"><span class="cl">minikube service nginx
+</span></span><span class="line"><span class="cl"><span class="c1"># 查看 Service 详情</span>
+</span></span><span class="line"><span class="cl">minikube kubectl --  get service fuzzing -o wide
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 删除</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 首先查看所有资源</span>
+</span></span><span class="line"><span class="cl">minikube kubectl --  get all --show-labels
+</span></span><span class="line"><span class="cl"><span class="c1"># 根据显示的资源名称精确删除</span>
+</span></span><span class="line"><span class="cl">minikube kubectl --  delete deployment/&lt;name&gt; service/&lt;name&gt;
+</span></span></code></pre></td></tr></table>
+</div>
 </div>
 </section>
 
@@ -542,6 +573,30 @@
     <h2 class="section-title">相关文章</h2>
     <div class="related-content">
         <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8k3s%E6%90%AD%E5%BB%BAkubernetes/">
+        
+        
+            <div class="article-image">
+                <img src="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8k3s%E6%90%AD%E5%BB%BAkubernetes/k3s.5a92c3e6aaeea2702a3d65e40fb158ac_hu_a7e4887f6e435edf.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Ubuntu-service-2024使用k3s搭建kubernetes"
+                        
+                        data-hash="md5-WpLD5qruonAqPWXkD7FYrA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Ubuntu-service-2024使用k3s搭建kubernetes</h2>
+        </div>
+    </a>
+</article>
+
             
                 
 <article class="has-image">
@@ -586,6 +641,30 @@
 
         <div class="article-details">
             <h2 class="article-title">Ubuntu-service-2024安装miniconda管理python环境</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93outline-%E4%BD%BF%E7%94%A8keycloak%E5%AE%9E%E7%8E%B0%E6%9C%AC%E5%9C%B0%E6%B3%A8%E5%86%8C%E8%AE%A4%E8%AF%81/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93outline-%E4%BD%BF%E7%94%A8keycloak%E5%AE%9E%E7%8E%B0%E6%9C%AC%E5%9C%B0%E6%B3%A8%E5%86%8C%E8%AE%A4%E8%AF%81/outline.5f788f949880bf323f8790d6d57c94f2_hu_35ca6c6b229f4b57.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 使用docker搭建本地知识库Outline 使用keycloak实现本地注册认证"
+                        
+                        data-hash="md5-X3iPlJiAvzI/h5DW1XyU8g==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">使用docker搭建本地知识库Outline 使用keycloak实现本地注册认证</h2>
         </div>
     </a>
 </article>

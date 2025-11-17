@@ -3,9 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://Izumiy0.github.io/</loc>
-    <lastmod>2025-09-19T00:00:00+00:00</lastmod>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://Izumiy0.github.io/categories/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/categories/docker/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/tags/docker/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/tags/docker-compose/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/tags/keycloak/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/categories/linux/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/tags/linux/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/tags/outline/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/post/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/tags/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/categories/ubuntu/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/tags/ubuntu/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/p/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93outline-%E4%BD%BF%E7%94%A8keycloak%E5%AE%9E%E7%8E%B0%E6%9C%AC%E5%9C%B0%E6%B3%A8%E5%86%8C%E8%AE%A4%E8%AF%81/</loc>
+    <lastmod>2025-11-02T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/tags/k3s/</loc>
     <lastmod>2025-09-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://Izumiy0.github.io/categories/kubernetes/</loc>
@@ -14,22 +53,10 @@
     <loc>https://Izumiy0.github.io/tags/kubernetes/</loc>
     <lastmod>2025-09-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://Izumiy0.github.io/categories/linux/</loc>
-    <lastmod>2025-09-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://Izumiy0.github.io/tags/linux/</loc>
-    <lastmod>2025-09-19T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://Izumiy0.github.io/tags/minikube/</loc>
     <lastmod>2025-09-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://Izumiy0.github.io/post/</loc>
-    <lastmod>2025-09-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://Izumiy0.github.io/tags/</loc>
-    <lastmod>2025-09-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://Izumiy0.github.io/tags/ubuntu/</loc>
+    <loc>https://Izumiy0.github.io/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8k3s%E6%90%AD%E5%BB%BAkubernetes/</loc>
     <lastmod>2025-09-19T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://Izumiy0.github.io/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/</loc>
@@ -65,22 +92,10 @@
     <loc>https://Izumiy0.github.io/tags/conda/</loc>
     <lastmod>2025-09-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://Izumiy0.github.io/categories/docker/</loc>
-    <lastmod>2025-09-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://Izumiy0.github.io/tags/docker/</loc>
-    <lastmod>2025-09-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://Izumiy0.github.io/tags/docker-compose/</loc>
-    <lastmod>2025-09-02T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://Izumiy0.github.io/categories/python/</loc>
     <lastmod>2025-09-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://Izumiy0.github.io/tags/python/</loc>
-    <lastmod>2025-09-02T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://Izumiy0.github.io/categories/ubuntu/</loc>
     <lastmod>2025-09-02T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://Izumiy0.github.io/p/ubuntu-service-2024%E5%AE%89%E8%A3%85docker%E5%92%8Cdocker-compose/</loc>
@@ -178,6 +193,8 @@
   </url><url>
     <loc>https://Izumiy0.github.io/p/emoji-support/</loc>
     <lastmod>2019-03-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://Izumiy0.github.io/p/</loc>
   </url><url>
     <loc>https://Izumiy0.github.io/%E5%85%B3%E4%BA%8E-about/</loc>
   </url><url>

@@ -6,7 +6,7 @@
 
 <link rel='canonical' href='https://Izumiy0.github.io/p/ubuntu-service-2024%E5%AE%89%E8%A3%85docker%E5%92%8Cdocker-compose/'>
 
-<link rel="stylesheet" href="/scss/style.min.b41fbeb1758861b170a462ca5c5b93b973caa976a8f1c39fb877a49158ef60fb.css"><meta property='og:title' content="Ubuntu-service-2024安装docker和docker-compose">
+<link rel="stylesheet" href="/scss/style.min.21224093719c250cceb7c5654fb6cecfe9c4df52c14e73271226af30af181624.css"><meta property='og:title' content="Ubuntu-service-2024安装docker和docker-compose">
 <meta property='og:description' content="Ubuntu-service-2024安装docker和docker-compose">
 <meta property='og:url' content='https://Izumiy0.github.io/p/ubuntu-service-2024%E5%AE%89%E8%A3%85docker%E5%92%8Cdocker-compose/'>
 <meta property='og:site_name' content='Izumi Konata'>
@@ -369,11 +369,13 @@
 </span><span class="lnt">25
 </span><span class="lnt">26
 </span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="o">#</span><span class="w"> </span><span class="err">常规更新起手</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">sudo</span><span class="w"> </span><span class="n">apt</span><span class="w"> </span><span class="k">update</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">sudo</span><span class="w"> </span><span class="n">apt</span><span class="w"> </span><span class="n">upgrade</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">安装</span><span class="n">docker依赖</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="n">Docker在Ubuntu上依赖一些软件包</span><span class="err">。执行以下命令来安装这些依赖</span><span class="w">
@@ -384,6 +386,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">添加</span><span class="n">Docker软件源</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">sudo</span><span class="w"> </span><span class="k">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span><span class="w"> </span><span class="s2">&#34;deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">安装</span><span class="n">docker引擎</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">sudo</span><span class="w"> </span><span class="n">apt</span><span class="w"> </span><span class="k">update</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">sudo</span><span class="w"> </span><span class="n">apt</span><span class="w"> </span><span class="n">install</span><span class="w"> </span><span class="n">docker</span><span class="o">-</span><span class="n">ce</span><span class="w"> </span><span class="n">docker</span><span class="o">-</span><span class="n">ce</span><span class="o">-</span><span class="n">cli</span><span class="w"> </span><span class="n">containerd</span><span class="p">.</span><span class="n">io</span><span class="w"> </span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">-</span><span class="n">plugin</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">配置用户组（可选</span><span class="p">,</span><span class="err">推荐）</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="o">#</span><span class="w"> </span><span class="err">默认情况下，只有</span><span class="n">root用户和docker组的用户才能运行Docker命令</span><span class="err">。我们可以将当前用户添加到</span><span class="n">docker组</span><span class="err">，以避免每次使用</span><span class="n">Docker时都需要使用sudo</span><span class="err">。</span><span class="w">
@@ -485,17 +491,65 @@
             
                 
 <article class="has-image">
+    <a href="/p/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93outline-%E4%BD%BF%E7%94%A8keycloak%E5%AE%9E%E7%8E%B0%E6%9C%AC%E5%9C%B0%E6%B3%A8%E5%86%8C%E8%AE%A4%E8%AF%81/">
+        
+        
+            <div class="article-image">
+                <img src="/p/%E4%BD%BF%E7%94%A8docker%E6%90%AD%E5%BB%BA%E6%9C%AC%E5%9C%B0%E7%9F%A5%E8%AF%86%E5%BA%93outline-%E4%BD%BF%E7%94%A8keycloak%E5%AE%9E%E7%8E%B0%E6%9C%AC%E5%9C%B0%E6%B3%A8%E5%86%8C%E8%AE%A4%E8%AF%81/outline.5f788f949880bf323f8790d6d57c94f2_hu_35ca6c6b229f4b57.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post 使用docker搭建本地知识库Outline 使用keycloak实现本地注册认证"
+                        
+                        data-hash="md5-X3iPlJiAvzI/h5DW1XyU8g==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">使用docker搭建本地知识库Outline 使用keycloak实现本地注册认证</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8k3s%E6%90%AD%E5%BB%BAkubernetes/">
+        
+        
+            <div class="article-image">
+                <img src="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8k3s%E6%90%AD%E5%BB%BAkubernetes/k3s.5a92c3e6aaeea2702a3d65e40fb158ac_hu_a7e4887f6e435edf.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post Ubuntu-service-2024使用k3s搭建kubernetes"
+                        
+                        data-hash="md5-WpLD5qruonAqPWXkD7FYrA==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Ubuntu-service-2024使用k3s搭建kubernetes</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
     <a href="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/">
         
         
             <div class="article-image">
-                <img src="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/kubernetes.e9426b8e00338c710d9d96d09aa01088_hu_30e006547224e41e.png" 
+                <img src="/p/ubuntu-service-2024%E4%BD%BF%E7%94%A8minicube%E6%90%AD%E5%BB%BAkubernetes/minikube.1b1cfcb9cef93b109595c633a791c079_hu_ed65154e01176282.png" 
                         width="250" 
                         height="150" 
                         loading="lazy"
                         alt="Featured image of post Ubuntu-service-2024使用minicube搭建kubernetes"
                         
-                        data-hash="md5-6UJrjgAzjHENnZbQmqAQiA==">
+                        data-hash="md5-Gxz8uc75OxCVlcYzp5HAeQ==">
                 
             </div>
         

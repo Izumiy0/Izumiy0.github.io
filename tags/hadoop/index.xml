@@ -50,7 +50,8 @@
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;blockquote&gt;
-&lt;p&gt;注意：所有节点需处于同一局域网，且关闭防火墙（避免端口拦截）。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;注意：所有节点需处于同一局域网，且关闭防火墙（避免端口拦截）。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;12-操作系统配置所有节点执行&#34;&gt;1.2 操作系统配置（所有节点执行）
 &lt;/h3&gt;&lt;p&gt;本文使用&lt;strong&gt;CentOS 7&lt;/strong&gt;系统，以下操作需以&lt;code&gt;root&lt;/code&gt;用户或&lt;code&gt;sudo&lt;/code&gt;权限执行：&lt;/p&gt;
 &lt;h4 id=&#34;1关闭防火墙与-selinux&#34;&gt;（1）关闭防火墙与 SELinux
@@ -834,7 +835,8 @@
 &lt;/h2&gt;&lt;p&gt;本文详细讲解了 3 节点 Hadoop 集群的搭建流程，核心步骤可概括为：&lt;strong&gt;环境准备→配置免密→Hadoop 配置→同步节点→格式化启动→验证状态&lt;/strong&gt;。对于新手而言，重点关注 IP 映射、SSH 免密、配置文件路径和权限这几个环节，即可避免大部分问题。&lt;/p&gt;
 &lt;p&gt;后续可进一步学习 Hadoop 的分布式计算（MapReduce）、YARN 资源调度等功能，或搭建 HBase、Spark 等生态组件，逐步深入大数据技术领域。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;（注：文档部分内容由 AI 生成）&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;（注：文档部分内容由 AI 生成）&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         
